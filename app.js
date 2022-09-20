@@ -7,8 +7,10 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.get('/', (req, res) => {
     res.send('hello world')
   })
+  app.use(bodyParser.json())
 
-  const employeeRouters = require('./src/routes/employee.routes') 
+const employeeRouters = require('./src/routes/employee.routes') 
+
 app.use('/api/v1/employee', employeeRouters)
 
 app.listen(process.env.PORT || 8000 ,()=>{
