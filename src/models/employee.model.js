@@ -1,6 +1,6 @@
  var db = require('../../config/db')
 
- var Employee = (employee)=>{
+ var Employee = function(employee){
   this.id = employee.id
   this.first_name = employee.first_name
   this.last_name = employee.last_name
@@ -19,6 +19,17 @@ Employee.getAllEmployees = (result) =>{
       }
     })
 }
+Employee.getEmployeeById = (id,result) =>{
+  db.query(`SELECT * FROM employee WHERE id=${id};`, (err, res)=>{
+    if (err)  {
+      console.log('error while fetching', err)
+      result(null, err) 
+    } else { 
+      console.log('Employee fetched Successfully !!!');
+         result(null, res) 
+    }
+  })
+}
 
 Employee.createEmployee = (employeeReqData, result)=>{
   db.query('INSERT INTO employee SET ?', employeeReqData, (err ,res)=>{
@@ -31,15 +42,4 @@ Employee.createEmployee = (employeeReqData, result)=>{
         }
     })
 }
-
-Employee.createEmployee = (employeeReqData, result)=>{
-if (err) {
-  console.log('error while inserting data')
-   result(null , {status: false, message:'Employee Created Succesfully'})
-} else {
-  console.log('Employee Created Succesfully')
-   result(null, {status: true, message: 'Employee Created Succesfully', insertId: res.id})
-}
-}
-
 module.exports = Employee
