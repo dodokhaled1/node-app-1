@@ -10,4 +10,3 @@ const employeeController = require('../controllers/employee.controllers')
  router.post('/', employeeController.createNewEmployee)
 
  module.exports = router
- 
